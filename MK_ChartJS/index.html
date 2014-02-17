@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Line Chart</title>
+        <script src="Chart.js"></script>
+        
+        <!-- 1/2スケールで表示 -->
+        <meta name = "viewport" content = "initial-scale = 0.5, user-scalable = no">
+            <style>
+                canvas{
+                }
+            </style>
+            <script>
+                //***** HTML上のJavaScript *****
+                var newChart;
+                //Chartオブジェクトのフォーマットデータ
+                var lineChartData = {
+                    labels : ["January","February","March","April","May","June","July"],
+                    datasets : [
+                                {
+                                fillColor : "rgba(200,100,100,0.5)",
+                                strokeColor : "rgba(255,100,200,1)",
+                                pointColor : "rgba(200,0,0,1)",
+                                pointStrokeColor : "#fff",
+                                //この部分のdataの値を、Objective-Cから設定する
+                                //                        data : [1,1,1]
+                                }
+                                ]
+                                
+                }
+                //Objective-Cから呼び出される関数
+                //引数の値を、Chartのdataの値として設定して描画する
+                function setChart(data){
+                    //HTML内の id=chartCanvasのエレメントを取得し、canvas内にChartオブジェクトとして描画する
+                    var canvas  = document.getElementById("chartCanvas");
+                    var context = canvas.getContext("2d");
+                    lineChartData.datasets[0].data = data;
+                    newChart = new Chart(context).Radar(lineChartData);
+                    
+                    //同じdataを使って別の形式のChartオブジェクトを描画する
+                    newChart = new Chart(document.getElementById("chartCanvas1").getContext("2d")).Line(lineChartData);
+                }
+                //***********************************
+            </script>
+            </head>
+    <body>
+        <table>
+            <tr><td>
+        <!-- Chatの描画対象canvas -->
+        <canvas id="chartCanvas" height="200" width="300"></canvas>
+            </td><td>
+        <!-- Chatの描画対象canvas -->
+        <canvas id="chartCanvas1" height="200" width="300"></canvas>
+            </td></tr>
+            </table>
+        
+        
+    </body>
+</html>
